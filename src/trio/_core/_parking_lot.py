@@ -151,6 +151,10 @@ class ParkingLot:
     # {task: None}, we just want a deque where we can quickly delete random
     # items
     _parked: OrderedDict[Task, None] = attrs.field(factory=OrderedDict, init=False)
+    #: Tasks that have called :meth:`break_lot` on this parking lot.
+    #: Empty while the lot is healthy; after the lot is broken, each breaker
+    #: task is appended here (duplicates allowed). Shown in errors when
+    #: another task tries to :meth:`park` on a broken lot.
     broken_by: list[Task] = attrs.field(factory=list, init=False)
 
     def __len__(self) -> int:
